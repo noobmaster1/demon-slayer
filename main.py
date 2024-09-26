@@ -31,15 +31,13 @@ FIGHTER1_SIZE_X = 200
 FIGHTER1_SIZE_Y = 202
 FIGHTER1_SCALE = 5  # Because actual size is tiny
 FIGHTER1_OFFSET = [90, 87.5]  # Because scale korle position theke shore jay
-FIGHTER1_DATA = [FIGHTER1_SIZE_X, FIGHTER1_SIZE_Y,
-                 FIGHTER1_SCALE, FIGHTER1_OFFSET]
+FIGHTER1_DATA = [FIGHTER1_SIZE_X, FIGHTER1_SIZE_Y,FIGHTER1_SCALE, FIGHTER1_OFFSET]
 
 FIGHTER2_SIZE_X = 250
 FIGHTER2_SIZE_Y = 250
 FIGHTER2_SCALE = 4
 FIGHTER2_OFFSET = [113, 122]
-FIGHTER2_DATA = [FIGHTER2_SIZE_X, FIGHTER2_SIZE_Y,
-                 FIGHTER2_SCALE, FIGHTER2_OFFSET]
+FIGHTER2_DATA = [FIGHTER2_SIZE_X, FIGHTER2_SIZE_Y,FIGHTER2_SCALE, FIGHTER2_OFFSET]
 
 #bgm and sfx
 pygame.mixer.music.load("resources/audio/fight.mp3")
@@ -77,15 +75,17 @@ FIGHTER2_ANIMATION_STEPS = [8, 8, 1, 8, 8, 3, 7]
 # font
 count_font = pygame.font.Font("resources/fonts/Khatulistiwa Demo.ttf", 200)
 score_font = pygame.font.Font("resources/fonts/Khatulistiwa Demo.ttf", 30)
-title_font = pygame.font.Font(
-    "resources/fonts/Slaughter.ttf", 30, bold=pygame.font.Font.bold)
-pause_font = pygame.font.Font(
-    "resources/fonts/Slaughter.ttf", 200, bold=pygame.font.Font.bold)
-resume_font = pygame.font.Font(
-    "resources/fonts/Slaughter.ttf", 32, bold=pygame.font.Font.bold)
-ko_font = pygame.font.Font(
-    "resources/fonts/Slaughter.ttf", 50, bold=pygame.font.Font.bold)
+# Load the font without the bold argument
+title_font = pygame.font.Font("resources/fonts/Slaughter.ttf", 30)
+pause_font = pygame.font.Font("resources/fonts/Slaughter.ttf", 200)
+resume_font = pygame.font.Font("resources/fonts/Slaughter.ttf", 32)
+ko_font = pygame.font.Font("resources/fonts/Slaughter.ttf", 50)
 
+# Set the bold attribute using set_bold()
+title_font.set_bold(True)
+pause_font.set_bold(True)
+resume_font.set_bold(True)
+ko_font.set_bold(True)
 
 # show text
 def show_text(text, font, text_col, x, y):
@@ -124,8 +124,7 @@ while run:
     key = pygame.key.get_pressed()
 
     if pause == True:
-        show_text("PAUSED", pause_font, BLOOD_RED,
-                  250, 200)
+        show_text("PAUSED", pause_font, BLOOD_RED,250, 200)
         show_text("Press ENTER to resume", resume_font, WHITE, 417, 467)
     # Show fighters
     fighter_1.show(screen)
@@ -164,8 +163,7 @@ while run:
 
         # Game over howar 1.5s por ENTER press korte bolbe, ENTER press korle game restart hobe
         if pygame.time.get_ticks() - round_over_time > 1500:
-            show_text("Press  ENTER  for new game",
-                      title_font, WHITE, 435, 570)
+            show_text("Press  ENTER  for new game",title_font, WHITE, 435, 570)
 
             if key[pygame.K_RETURN]:
                 ko_fx.stop()
@@ -191,14 +189,11 @@ while run:
     # update countdown
     if game_start_count <= 0:
         # Fighter Movement
-        fighter_1.movement(WINDOW_WIDTH, WINDOW_HEIGHT,
-                           fighter_2, round_over, pause)
-        fighter_2.movement(WINDOW_WIDTH, WINDOW_HEIGHT,
-                           fighter_1, round_over, pause)
+        fighter_1.movement(WINDOW_WIDTH, WINDOW_HEIGHT,fighter_2, round_over, pause)
+        fighter_2.movement(WINDOW_WIDTH, WINDOW_HEIGHT,fighter_1, round_over, pause)
     else:
         # show game intro count
-        show_text(str(game_start_count), count_font, BLOOD_RED,
-                  WINDOW_WIDTH / 2.15, WINDOW_HEIGHT / 3)
+        show_text(str(game_start_count), count_font, BLOOD_RED,WINDOW_WIDTH / 2.15, WINDOW_HEIGHT / 3)
         # update intro count
         if (pygame.time.get_ticks() - latest_count) >= 1000:
             game_start_count -= 1
